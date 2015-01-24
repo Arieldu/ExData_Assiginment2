@@ -1,0 +1,12 @@
+library(ggplot2)
+library(utils)
+library(plyr)
+SCC <- readRDS("E:/LEARN/MOOC/Exploratory Data Analysis/exdata-data-NEI_data/summarySCC_PM25.rds")
+NEI <- readRDS("E:/LEARN/MOOC/Exploratory Data Analysis/exdata-data-NEI_data/Source_Classification_Code.rds")
+BalNEI <- subset(NEI, NEI$fips == "24510")
+BalTotalEmissionsType <- ddply(BalNEI, c("type","year"), summarize, Total_Emissions=sum(NEI$Emissions))
+g <- ggplot(data=BalTotalEmissionsType, aes(NEI$year, Total_Emissions, group = type, color = type ))
+g + geom_line(lwd=2) + ggtitle(bquote("US Total PM"[2.5]~"Emissions by Source")) +
+  labs(list(color = "Emission Source", x = "Year", y = bquote("PM"[2.5]~" emissions (tons)")))
+BalNEI <- subset(NEI, NEI$fips == "24510")
+LosNEI <- subset(NEI, NEI$fips == "06037")
