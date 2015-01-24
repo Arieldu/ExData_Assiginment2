@@ -9,7 +9,6 @@ BalNEI <- subset(NEI, NEI$fips == "24510")
 +                   ylab = bquote("PM"[2.5]~"emissions (tons)"),
 +                   xlab = "Year",
 +                   ylim = c(0, max(Total_Emissions)*1.05)) # simple scale to look better
-+     # Note bp now holds the centers of each bar chart x axis
-+     lines(bp, Total_Emissions, col = "blue", lwd = 2)
++    lines(bp, Total_Emissions, col = "blue", lwd = 2)
 +     points(bp, Total_Emissions, col = "blue", pch = "X", lwd =2)
 + })
