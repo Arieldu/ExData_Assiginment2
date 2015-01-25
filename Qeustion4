@@ -1,0 +1,18 @@
+SCC <- readRDS("E:/LEARN/MOOC/Exploratory Data Analysis/exdata-data-NEI_data/summarySCC_PM25.rds")
+NEI <- readRDS("E:/LEARN/MOOC/Exploratory Data Analysis/exdata-data-NEI_data/Source_Classification_Code.rds")
+coalIdx = which(
+  grepl("coal", SCC$SCC.Level.Three, ignore.case=TRUE) |
+    grepl("lignite", SCC$SCC.Level.Three, ignore.case=TRUE)
+)
+
+coalSCC = SCC[coalIdx, 1]
+coalNEI = subset(NEI, SCC %in% coalSCC)
+coalTotalEmi = aggregate(Emissions ~ year, data=coalNEI, sum)
+png(filename="plot4.png", width=480, height=480, units="px")
+barplot(coalTotalEmi$Emissions, 
+        main=expression(Total~PM[2.5]~Emissions~from~Coal~Combustion-related~Sources),
+        xlab="Year", 
+        ylab=expression(PM[2.5]~Emissions~(`in`~tons))
+)
+axis(1, at=c(1:4), labels=c("1999", "2002", "2005", "2008"))
+dev.off()
